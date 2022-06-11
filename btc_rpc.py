@@ -9,13 +9,13 @@ rpcport = 18332
 rpcuser = 'Chocolatier'
 rpcpassword = 'RPCs'
 rpcip = '127.0.0.1'
-serverURL = 'http://' + str(rpcuser) + ':' + str(rpcpassword)+ '@' + str(rpcip)+":" + str(rpcport)
 
-# Bitcoin mining information
-
+# Bitcoin mining information would go here
 MAX_NONCE = int(1000000)
 
 # Way I use to connect and retrieve information from my RPC
+serverURL = 'http://' + str(rpcuser) + ':' + str(rpcpassword)+ '@' + str(rpcip)+":" + str(rpcport)
+
 class RPCHost(object):
     def __init__(self, url):
         self._session = requests.Session()
@@ -45,9 +45,11 @@ class RPCHost(object):
         if 'error' in responseJSON and responseJSON['error'] != None:
             raise Exception('Error in RPC call: ' + str(responseJSON['error']))
         return responseJSON['result']
+    
 # host is used to get information on the RPC API
 # full list is on https://developer.bitcoin.org/reference/rpc/index.html
 host = RPCHost(serverURL)
+
 # getblocktemplate replaces getwork
 template = host.call("getblocktemplate", {"rules": ["segwit"]})
 
@@ -76,4 +78,4 @@ curtime
 bits
 height
 default_witness_commitment
-# Where do we go from here.
+# Where do we go from here. What information do I need, how to process it and what can I discard?
